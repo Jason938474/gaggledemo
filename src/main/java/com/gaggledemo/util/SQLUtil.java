@@ -1,5 +1,9 @@
 package com.gaggledemo.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.lang.invoke.MethodHandles;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -8,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SQLUtil {
+    protected static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     // This just looks for the // pattern and strips out anything past that - the ?m is a multiline directive
     public static final String SINGLE_LINE_COMMENT ="(?m)//.*$";
@@ -49,6 +54,8 @@ public class SQLUtil {
         if (isPersistent) {
             url = url+PERSIST_PARAM;
         }
+
+        logger.info("Getting connection for db name {}", dbName);
 
         return DriverManager.getConnection(url);
     }

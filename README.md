@@ -28,6 +28,6 @@ Update: so it looks like a convenient way to document my progress is just to do 
 
 I've now introduced more capability to SQLUtil which allows us to generate connections and run a list of SQL statements.  Also discovered a bug in the parser which let blank lines through so corrected that.  And as a result of the new unit test, found that the USER table is reserved so changed that table name to STUDENT.  But so far, I'm definitely liking H2, it's pretty easy to work with.  One thing I need to think about next is connection management and logging.  Based on how we already have a Util class to deal with connectivity, we may not need to use connection pooling yet but if we have time, that could come.
 
-
+Another quick update: turns out that we've got logback bundled in with the spring boot so it was quick work to add some logging.  Running a few tests in the IDE confirmed that it was working fine.  I've used a nice construction in the LoggerFactory to pull in the dynamic class name via MethodHandles.  I can't forget the foreign key constraints in the startup.sql file, though.  That's probably next, then we can look at the ORM stuff I think.  
 
 

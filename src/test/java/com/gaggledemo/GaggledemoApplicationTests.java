@@ -3,7 +3,10 @@ package com.gaggledemo;
 import com.gaggledemo.util.SQLUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.lang.invoke.MethodHandles;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
@@ -11,6 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 class GaggledemoApplicationTests {
+	protected static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	/**
 	 * Runs startup.sql against throwaway instance to validate syntax
@@ -32,6 +36,8 @@ class GaggledemoApplicationTests {
 	public void testInMemoryDbConnectionPersistence() throws SQLException {
 		// Using random string for name just to ensure we aren't reading data from a previous run
 		final String testData = UUID.randomUUID().toString();
+
+		logger.info("Creating test schema...");
 
 		// First connection - create table and insert data
 		// Using a test DB name for this test to prevent overlap with other DBs
