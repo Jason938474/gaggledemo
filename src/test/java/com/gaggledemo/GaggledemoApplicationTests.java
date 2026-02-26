@@ -41,7 +41,7 @@ class GaggledemoApplicationTests {
 
 		// First connection - create table and insert data
 		// Using a test DB name for this test to prevent overlap with other DBs
-		try (Connection conn1 = SQLUtil.getConn("testDB", true)) {
+		try (Connection conn1 = SQLUtil.getConn("testDB")) {
 			try (Statement stmt = conn1.createStatement()) {
 				stmt.execute("CREATE TABLE test (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(999) NOT NULL)");
 
@@ -52,7 +52,7 @@ class GaggledemoApplicationTests {
 		}
 
 		// Second connection - try to read the data
-		try (Connection conn2 = SQLUtil.getConn("testDB", true)) {
+		try (Connection conn2 = SQLUtil.getConn("testDB")) {
 			try (Statement stmt = conn2.createStatement();
 				ResultSet rs = stmt.executeQuery("SELECT name FROM test")) {
 				Assertions.assertTrue(rs.next(), "No rows in table - db structure did not persist across connections");
