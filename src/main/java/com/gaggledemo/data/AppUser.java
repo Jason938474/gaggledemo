@@ -9,7 +9,13 @@ public class AppUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    protected AppUser() { }
+    protected AppUser() {}
+
+    private AppUser(AppUser.Builder builder) {
+        this.name = builder.name;
+        this.email = builder.email;
+        this.schoolAccount = builder.schoolAccount;
+    }
 
     private String name;
     private String email;
@@ -52,5 +58,35 @@ public class AppUser {
                 ", email='" + email + '\'' +
                 ", schoolAccount='" + schoolAccount + '\'' +
                 '}';
+    }
+
+    public static class Builder {
+        private String name;
+        private String email;
+        private String schoolAccount;
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder schoolAccount(String schoolAccount) {
+            this.schoolAccount = schoolAccount;
+            return this;
+        }
+
+        public AppUser build() {
+            return new AppUser(this);
+        }
+    }
+
+    // Static helper to start the builder
+    public static Builder builder() {
+        return new Builder();
     }
 }
