@@ -7,25 +7,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.invoke.MethodHandles;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.sql.*;
-import java.util.List;
 import java.util.UUID;
 
 class GaggledemoApplicationTests {
 	protected static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	/**
-	 * Runs startup.sql against throwaway instance to validate syntax
+	 * Runs schema.sql against throwaway instance to validate syntax
 	 */
 	@Test
 	public void testStartupSequence() throws Exception {
 		// we don't want persistence, we just use it to check syntax
 		try (Connection conn = SQLUtil.getConn("throwaway", false)) {
-			String schemaInput = Files.readString(Path.of(getClass().getResource("/sql/startup.sql").toURI()));
-			List<String> statements = SQLUtil.parseSql(schemaInput);
-			SQLUtil.runSqlList(conn, statements);
+			SQLUtil.createSchema(conn);
 		}
 	}
 

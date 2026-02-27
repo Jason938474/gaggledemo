@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.invoke.MethodHandles;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -37,6 +39,12 @@ public class SQLUtil {
                 s.execute(nxtSql);
             }
         }
+    }
+
+    public static void createSchema(Connection conn) throws Exception {
+        String schemaInput = Files.readString(Path.of(SQLUtil.class.getResource("/schema.sql").toURI()));
+        List<String> statements = SQLUtil.parseSql(schemaInput);
+        SQLUtil.runSqlList(conn, statements);
     }
 
     /**

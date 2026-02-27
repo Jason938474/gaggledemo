@@ -28,8 +28,23 @@ Update: so it looks like a convenient way to document my progress is just to do 
 
 I've now introduced more capability to SQLUtil which allows us to generate connections and run a list of SQL statements.  Also discovered a bug in the parser which let blank lines through so corrected that.  And as a result of the new unit test, found that the USER table is reserved so changed that table name to STUDENT.  But so far, I'm definitely liking H2, it's pretty easy to work with.  One thing I need to think about next is connection management and logging.  Based on how we already have a Util class to deal with connectivity, we may not need to use connection pooling yet but if we have time, that could come.
 
-Another quick update: turns out that we've got logback bundled in with the spring boot so it was quick work to add some logging.  Running a few tests in the IDE confirmed that it was working fine.  I've used a nice construction in the LoggerFactory to pull in the dynamic class name via MethodHandles.  I can't forget the foreign key constraints in the startup.sql file, though.  That's probably next, then we can look at the ORM stuff I think.  
+Another quick update: turns out that we've got logback bundled in with the spring boot so it was quick work to add some logging.  Running a few tests in the IDE confirmed that it was working fine.  I've used a nice construction in the LoggerFactory to pull in the dynamic class name via MethodHandles.  I can't forget the foreign key constraints in the schema.sql file, though.  That's probably next, then we can look at the ORM stuff I think.  
 
 Ok, it's the next day and I'm now looking at the data layer.  I've created some named foreign key constraints on createdBy and editedBy into the student table and have run the associated test to ensure that the syntax was fine. Am looking at JPA next.
+
+Ok, now for the JPA layer, I've created a data package in main and test so I can start creating things there.  I'm going to start just with the Student class since it has no foreign key constraints and can be created without anything else. I'm going to be doing some TDD here and start with a unit test.  And since I have an in-memory DB, I can create one in the test, populate it with data and try to look up the record using the ID.
+
+The basic lookup test is now coded but I need the repository so I'm looking into that next.  I anticipate that I may have some issues in this test for my student record repository to use the connection as created and seeded by the unit test but we'll see.  It might be a good idea to either have a base class for our tests here or a util since we need to autopopulate the database with the data structure each time.
+
+On second thought, I think we can have a createSchema method inside of SQLUtil to do this.  And later if there's time, we can build in some safety checks here just to make sure the schema isn't created twice.  Longer term, this can also be where versioning and in-place updating of the schema can take place.
+
+Alright so I found out that there's resource files that can preload schemas and preload data for both the test and main environment.  I've gotten the schema loader to work but I don't have the test data working yet but I am able to have a simple student loading/ saving test working so that's progress.
+
+I've cranked up the debugging in the logs up a bit and I'm seeing both the schema and the data.sql file running but I'm still not able to load that record.  I've put in spring.sql.init.mode=always into the application.properties to ensure that's always run but now I'm thinking this may actually be an issue with the way an in-memory DB is handled, the tests may be trashing the DB early?
+
+Did more tweaking and broke the unit tests - I think this setup doesn't do well when there's a schema.sql in both main and test, that seems to be problematic.  And the schema isn't different between test and prod yet so I'm going to do one file now.  However, the issue with test data still is around, not sure what to do about that but when I use a file based DB, it does work, so there's definitely issues with in-memory persistence in unit tests right now.  But seeing as we have to test the full CRUD cycle, it's not a big obstacle for right now. Oh and I also found out that the schema.sql file doesn't like // comments so switched it to /* */ style instead, which still works with my old schema test code.  I can move on to the next step but will commit a working codebase now before we get there.
+
+
+
 
 

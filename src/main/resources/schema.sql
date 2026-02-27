@@ -1,5 +1,5 @@
 
- // Initial version of file, Feb 26
+/* Initial version of file, Feb 26 */
 CREATE TABLE STUDENT
 (
     ID INT PRIMARY KEY AUTO_INCREMENT,
@@ -19,7 +19,7 @@ CREATE TABLE DOCUMENT
     UPDATEDAT TIMESTAMP NOT NULL
 );
 
-// Create FK constraints separately so we can name them to help with debugging later if they are violated
+/* Create FK constraints separately so we can name them to help with debugging later if they are violated */
 
 ALTER TABLE DOCUMENT ADD CONSTRAINT FK_DOCUMENT_CREATEDBY
 FOREIGN KEY (CREATEDBY) REFERENCES STUDENT(ID);
