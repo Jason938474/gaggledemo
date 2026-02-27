@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.lang.invoke.MethodHandles;
 
 /**
- * Main class co house API endpoints
+ * Main class to house API endpoints
  * @author jason
  */
 @org.springframework.web.bind.annotation.RestController

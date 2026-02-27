@@ -30,4 +30,6 @@ I've now introduced more capability to SQLUtil which allows us to generate conne
 
 Another quick update: turns out that we've got logback bundled in with the spring boot so it was quick work to add some logging.  Running a few tests in the IDE confirmed that it was working fine.  I've used a nice construction in the LoggerFactory to pull in the dynamic class name via MethodHandles.  I can't forget the foreign key constraints in the startup.sql file, though.  That's probably next, then we can look at the ORM stuff I think.  
 
+Ok, it's the next day and I'm now looking at the data layer.  I've created some named foreign key constraints on createdBy and editedBy into the student table and have run the associated test to ensure that the syntax was fine. Am looking at JPA next.
+
 
