@@ -4,12 +4,12 @@ import jakarta.persistence.*;
 
 
 @Entity
-public class Student {
+public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    protected Student() { }
+    protected AppUser() { }
 
     private String name;
     private String email;
@@ -46,7 +46,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student {" +
+        return "AppUser {" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +

@@ -4,8 +4,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface StudentRepository extends CrudRepository<Student, Integer> {
+public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
 
     @Override
-    Optional<Student> findById(Integer id);
+    Optional<AppUser> findById(Integer id);
 }

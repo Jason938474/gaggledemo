@@ -44,7 +44,13 @@ I've cranked up the debugging in the logs up a bit and I'm seeing both the schem
 
 Did more tweaking and broke the unit tests - I think this setup doesn't do well when there's a schema.sql in both main and test, that seems to be problematic.  And the schema isn't different between test and prod yet so I'm going to do one file now.  However, the issue with test data still is around, not sure what to do about that but when I use a file based DB, it does work, so there's definitely issues with in-memory persistence in unit tests right now.  But seeing as we have to test the full CRUD cycle which will include data creation, it's not a big obstacle for right now. Oh and I also found out that the schema.sql file doesn't like // comments so switched it to /* */ style instead, which still works with my old schema test code.  I can move on to the next step but will commit a working codebase now before we get there.
 
+Alright, so next we should look at creating some endpoints for CRUD with users.  I also noticed that the spec says we have to have User as the object name, not Student, so I will probably update that next before I get too far.  However, the only issue is that H2 already has a predefined USER table. Going to add SqlSquirrel to my machine so I can do some manual querying and get a good naming for the table that more matches USER.
 
+Ok, so now sql squirrel is up and running with an in-memory DB, operates fine and as I thought, user is a keyword.  Maybe I can slightly reword this to AppUser and do and alternative table name mapping in the ORM layer or as an alternative, the table USERS (plural) is actually ok to use.  I was thinking to keep the table name as Student but that's a bit too confusing and if it also contains academic staff, Student isn't actually accurate.    So that will have to change regardless.
+
+At this point, I feel like User is a bit too generic and there are not only keywords like this in H2 but also potentially other objects, so I'm going to rebill this entire structure as AppUser / APP_USER.  It's not exactly what's written but will cause less confusion in the long run
+
+Ok, since we're early in the dev cycle, this change wasn't tough to do especially with refactoring tools, so we did the change and all the tests pass again. Committing and next work is endpoints for AppUser
 
 
 

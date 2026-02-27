@@ -12,10 +12,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-class StudentTest {
+class AppUserTest {
 
     @Autowired
-    private StudentRepository repo;
+    private AppUserRepository repo;
     private DataSource dataSource;
 
     /**
@@ -33,19 +33,19 @@ class StudentTest {
     }
 
     @Test
-    void testStudentCrudCycle() {
-        Student st = new Student();
-        st.setEmail("test@test.com");
-        st.setName("testName123");
-        st.setSchoolAccount("ACCT-999");
-        st = repo.save(st);
+    void testAppUserCrudCycle() {
+        AppUser user = new AppUser();
+        user.setEmail("test@test.com");
+        user.setName("testName123");
+        user.setSchoolAccount("ACCT-999");
+        user = repo.save(user);
 
-        Optional<Student> copyHolder = repo.findById(st.getId());
-        assertTrue(copyHolder.isPresent(), "Saved student record not found");
-        Student copy = copyHolder.get();
-        assertEquals(st.toString(), copy.toString(), "Loaded Student Record incorrect");
-        repo.deleteById(st.getId());
-        assertTrue(repo.findById(st.getId()).isEmpty(), "Student record failed to delete");
+        Optional<AppUser> copyHolder = repo.findById(user.getId());
+        assertTrue(copyHolder.isPresent(), "Saved user record not found");
+        AppUser copy = copyHolder.get();
+        assertEquals(user.toString(), copy.toString(), "Loaded user Record incorrect");
+        repo.deleteById(user.getId());
+        assertTrue(repo.findById(user.getId()).isEmpty(), "User record failed to delete");
     }
 
 }
