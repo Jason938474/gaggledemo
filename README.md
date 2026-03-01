@@ -70,3 +70,5 @@ It's now the next day and I'm looking to build the API layer for the Documents n
 
 Ok, the creation endpoint is now working as expected and I've chosen to do a bit more exception handling here and indicate if one of the user Ids is invalid.  To do this, I'm going to throw a ResponseStatusException in the service layer with a custom message indicating which key was invalid.  This works fine however my custom message is trashed when the JSON output comes back.  Supposedly, there's a server param to force inclusion of the custom text but I couldn't get that to work so I've also coded a small custom error handling method in my existing Exception handling class that will include these reason messages.  So, given the time crunch, I think I'm going to move on to the other API calls now that I'm happy enough with what I see
 
+Next, added the list documents and get by ID.  Most of this was handled by the framework so now I need the final call to PUT for updates.  I know that it's sometimes custom to use URLs like /updateDocument or something like that for updates, but for this, I'm going to use PUT/POST instead to differentiate
+

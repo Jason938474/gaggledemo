@@ -47,6 +47,21 @@ public class MainController {
         return ResponseEntity.ok(doc);
     }
 
+    @GetMapping("/document")
+    public ResponseEntity<List<Document>> listDocuments() {
+        logger.info("List documents endpoint called...");
+        List<Document> docs = docService.listDocuments();
+        return ResponseEntity.ok(docs);
+    }
+
+    @GetMapping("/document/{id}")
+    public ResponseEntity<Document> getDocumentById(@PathVariable Integer id) {
+        logger.info("Document lookup called for id {}", id);
+        return docService.findDocumentById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping("/appUser")
     public ResponseEntity<AppUser> createAppUser(@Valid @RequestBody AppUserRequestDto dto) {
         logger.info("New app user {} requested for creation", dto.name);
