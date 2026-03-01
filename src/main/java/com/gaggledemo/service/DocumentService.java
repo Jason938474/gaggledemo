@@ -1,6 +1,7 @@
 package com.gaggledemo.service;
 
 import com.gaggledemo.controllers.request.DocumentRequestDto;
+import com.gaggledemo.controllers.request.DocumentUpdateRequestDto;
 import com.gaggledemo.data.AppUser;
 import com.gaggledemo.data.AppUserRepository;
 import com.gaggledemo.data.Document;
@@ -54,6 +55,21 @@ public class DocumentService {
         newDoc = docRepo.save(newDoc);
         logger.info("New document with id {} created", newDoc.getId());
         return newDoc;
+    }
+
+    public Document updateDocument(Integer id, DocumentUpdateRequestDto dto) {
+        logger.info("Document update called for id {}", id);
+        Document existingDoc = docRepo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Document " + id + " not found"));
+
+        AppUser editor = appUserRepo.findById(dto.lastEditedBy)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Editor not found: " + dto.lastEditedBy));
+
+        logger.info("All keys validated, saving document id {}", id);
+        existingDoc.setTitle(dto.title);
+        existingDoc.setContent(dto.content);
+        existingDoc.setLastEditedBy(editor);
+        return docRepo.save(existingDoc);
     }
 
     public List<Document> listDocuments() {

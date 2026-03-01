@@ -2,6 +2,7 @@ package com.gaggledemo.controllers;
 
 import com.gaggledemo.controllers.request.AppUserRequestDto;
 import com.gaggledemo.controllers.request.DocumentRequestDto;
+import com.gaggledemo.controllers.request.DocumentUpdateRequestDto;
 import com.gaggledemo.data.AppUser;
 import com.gaggledemo.data.Document;
 import com.gaggledemo.service.AppUserService;
@@ -44,6 +45,13 @@ public class MainController {
     public ResponseEntity<Document> createDocument(@Valid @RequestBody DocumentRequestDto dto) {
         logger.info("New document endpoint hit with title {}", dto.title);
         Document doc = docService.createDocument(dto);
+        return ResponseEntity.ok(doc);
+    }
+
+    @PutMapping("/document/{id}")
+    public ResponseEntity<Document> updateDocument(@PathVariable Integer id, @Valid @RequestBody DocumentUpdateRequestDto dto) {
+        logger.info("Document update endpoint hit for id {}", id);
+        Document doc = docService.updateDocument(id, dto);
         return ResponseEntity.ok(doc);
     }
 
