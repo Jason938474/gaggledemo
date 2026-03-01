@@ -60,7 +60,7 @@ public class DocumentService {
     public Document updateDocument(Integer id, DocumentUpdateRequestDto dto) {
         logger.info("Document update called for id {}", id);
         Document existingDoc = docRepo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Document " + id + " not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Document not found: "+id));
 
         AppUser editor = appUserRepo.findById(dto.lastEditedBy)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Editor not found: " + dto.lastEditedBy));
