@@ -76,3 +76,7 @@ Alright, I'm now testing the new PUT for update.  I haven't used PUT in other pr
 
 Alright, so just to make sure everything's complete, I spent a bit more time on getting some service layer unit tests up and running for the document portion and we've got good coverage. Could do one for AppUser too if I had more time.  But still, we're looking good now, we're coming up green on the clean build, so checking in one more time.  The only thing missing now is the security restrictions.
 
+Ok, it's now the home stretch.  I haven't actually done security related to Spring yet but since we want multiple roles, it looks like we can configure this in memory as per the spec, so this will be likely in code for now using InMemoryUserDetailsManager. Adding the starter security import into the gradle dependencies and it looks like this is already fairly well laid-out in spring.io
+
+The security layer is now in place.  As stated above, I've chosen just to have a non-hashed in memory setup for test.  to test the no auth case, I've changed my "ping" endpoint to the public/info API and just returned simple status info.  The rest of the endpoints are covered by the SecurityConfig and I've put in a new DELETE endpoint just to test the admin auth, which is working well.
+
