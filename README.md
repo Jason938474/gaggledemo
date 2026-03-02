@@ -80,3 +80,5 @@ Ok, it's now the home stretch.  I haven't actually done security related to Spri
 
 The security layer is now in place.  As stated above, I've chosen just to have a non-hashed in memory setup for test.  to test the no auth case, I've changed my "ping" endpoint to the public/info API and just returned simple status info.  The rest of the endpoints are covered by the SecurityConfig and I've put in a new DELETE endpoint just to test the admin auth, which is working well.
 
+Because Bruno has been so helpful, I've put these script files into the test module for others to use.  This should conclude the entire setup.
+
